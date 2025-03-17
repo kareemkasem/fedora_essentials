@@ -43,9 +43,14 @@ flatpak install --noninteractive flathub io.github.realmazharhussain.GdmSettings
 flatpak install --noninteractive flathub org.localsend.localsend_app
 
 # Install brave browser
-dnf install dnf-plugins-core
+dnf install dnf-plugins-core -y
 dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
-dnf install brave-browser
+dnf install brave-browser -y
+
+# Install Github command line tools
+dnf install dnf5-plugins -y
+dnf config-manager addrepo --from-repofile=https://cli.github.com/packages/rpm/gh-cli.repo
+dnf install gh --repo gh-cli -y
 
 # (optional) Install my nodejs development software
 echo "Do you want to install the Node.js dev software? (y/n)"
