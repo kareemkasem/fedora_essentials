@@ -32,15 +32,15 @@ if ! command -v flatpak &> /dev/null; then
     exit 1
 fi
 
-# Install system tweaks
-dnf install -y gnome-tweaks
-dnf install gnome-shell-extension-blur-my-shell gnome-shell-extension-dash-to-dock gnome-shell-extension-light-style
+# Install Gnome Essentials
+dnf install -y gnome-tweaks gnome-shell-extension-blur-my-shell gnome-shell-extension-dash-to-dock gnome-shell-extension-light-style
 git clone https://github.com/mukul29/legacy-theme-auto-switcher-gnome-extension.git /usr/share/gnome-shell/extensions/
 git clone https://github.com/dpejoh/Adwaita-colors /usr/share/gnome-shell/extensions/
 flatpak install --noninteractive flathub com.mattjakeman.ExtensionManager
 flatpak install --noninteractive flathub com.github.tchx84.Flatseal
 flatpak install --noninteractive flathub io.github.realmazharhussain.GdmSettings
 flatpak install --noninteractive flathub org.localsend.localsend_app
+flatpak install --noninteractive flathub io.github.peazip.PeaZip
 
 # Install brave browser
 dnf install dnf-plugins-core -y
