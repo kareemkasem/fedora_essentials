@@ -16,4 +16,5 @@ sudo chmod u+x ./fedorainit.sh
 ```
 sudo ./fedorainit.sh
 ```
-4. this script will be updated in the future
+4. this scriptd is written for the Gnome desktop environment
+5. this script will be updated in the future
