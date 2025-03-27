@@ -28,8 +28,13 @@ dnf update @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-g
 
 # Check if flatpak is installed
 if ! command -v flatpak &> /dev/null; then
-    echo "flatpak is not installed. Please install flatpak."
-    exit 1
+    dnf install flatpak
+    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+fi
+
+# Check if curl is installed
+if ! command -v curl &> /dev/null; then
+    dnf install curl -y
 fi
 
 # Install Gnome Essentials
@@ -47,13 +52,18 @@ dnf install dnf-plugins-core -y
 dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 dnf install brave-browser -y
 
+# Modify firefox theme to be more gnome like 
+if command -v firefox &> /dev/null; then 
+curl -s -o- https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh | bash
+fi
+
 # Install Github command line tools
 dnf install dnf5-plugins -y
 dnf config-manager addrepo --from-repofile=https://cli.github.com/packages/rpm/gh-cli.repo
 dnf install gh --repo gh-cli -y
 
 # (optional) Install my nodejs development software
-echo "Do you want to install the Node.js dev software? (y/n)"
+echo "Do you want to install the Node.js development tools? (y/n)"
 read response
 
 if [ "$response" = "y" ]; then
