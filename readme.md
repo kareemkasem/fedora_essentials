@@ -6,7 +6,7 @@
 5. optional node stack config (mongodb, node, webstrom)
 
 ## key considerations:
-1. ensure flatpak and flathub are configured
+1. this script will install and configure flatpak and would install flatpak packages 
 2. ensure the script is excutable if not run
 ```
 cd /folder/containing/script
