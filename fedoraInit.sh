@@ -57,11 +57,6 @@ if command -v firefox &> /dev/null; then
 curl -s -o- https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh | bash
 fi
 
-# Modify firefox theme to be more gnome like 
-if command -v firefox &> /dev/null; then 
-curl -s -o- https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh | bash
-fi
-
 # Install ulauncher
 dnf install ulauncer
 mkdir -p ~/.config/ulauncher/user-themes
