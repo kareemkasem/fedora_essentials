@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu  # Exit on error or unset variables
+set -eu # Exit on error or unset variables
 
 # Ensure the script is run as root
 if [[ $EUID -ne 0 ]]; then
@@ -9,7 +9,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Ensure an internet connection is available
-if ! ping -c 1 google.com &> /dev/null; then
+if ! ping -c 1 google.com &>/dev/null; then
     echo "No internet connection. Please check your connection and try again."
     exit 1
 fi
@@ -27,13 +27,13 @@ dnf swap ffmpeg-free ffmpeg --allowerasing -y
 dnf update @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 
 # Check if flatpak is installed
-if ! command -v flatpak &> /dev/null; then
+if ! command -v flatpak &>/dev/null; then
     dnf install flatpak
     flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 fi
 
 # Check if curl is installed
-if ! command -v curl &> /dev/null; then
+if ! command -v curl &>/dev/null; then
     dnf install curl -y
 fi
 
@@ -52,16 +52,16 @@ dnf install dnf-plugins-core -y
 dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 dnf install brave-browser -y
 
-# Modify firefox theme to be more gnome like 
-if command -v firefox &> /dev/null; then 
-curl -s -o- https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh | bash
+# Modify firefox theme to be more gnome like
+if command -v firefox &>/dev/null; then
+    curl -s -o- https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh | bash
 fi
 
 # Install ulauncher
 dnf install ulauncer
 mkdir -p ~/.config/ulauncher/user-themes
 git clone https://github.com/kareemkasem/ulauncher-theme-libadwaita-dark \
-  ~/.config/ulauncher/user-themes/libadwaita-dark
+    ~/.config/ulauncher/user-themes/libadwaita-dark
 
 # Install Github command line tools
 dnf install dnf5-plugins -y
@@ -75,12 +75,12 @@ read response
 if [ "$response" = "y" ]; then
     # Install Node.js
     sudo dnf install -y nodejs npm
-    
+
     # Get Latest MongoDB Version
     MONGO_VERSION=$(curl -s https://www.mongodb.com/try/download/community | grep -oP '(?<=mongodb-org/)[0-9]+\.[0-9]+' | head -1)
 
     # Add MongoDB Repository
-    sudo tee /etc/yum.repos.d/mongodb-org.repo > /dev/null <<EOF
+    sudo tee /etc/yum.repos.d/mongodb-org.repo >/dev/null <<EOF
 [mongodb-org]
 name=MongoDB Repository
 baseurl=https://repo.mongodb.org/yum/redhat/9/mongodb-org/$MONGO_VERSION/x86_64/
@@ -108,7 +108,7 @@ EOF
 
     # Create WebStorm Desktop Entry
     WEBSTORM_DIR=$(ls -d /opt/WebStorm-*/ | head -1)
-    sudo tee /usr/share/applications/jetbrains-webstorm.desktop > /dev/null <<EOF
+    sudo tee /usr/share/applications/jetbrains-webstorm.desktop >/dev/null <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
