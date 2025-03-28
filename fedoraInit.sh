@@ -57,6 +57,17 @@ if command -v firefox &> /dev/null; then
 curl -s -o- https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh | bash
 fi
 
+# Modify firefox theme to be more gnome like 
+if command -v firefox &> /dev/null; then 
+curl -s -o- https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh | bash
+fi
+
+# Install ulauncher
+dnf install ulauncer
+mkdir -p ~/.config/ulauncher/user-themes
+git clone https://github.com/kareemkasem/ulauncher-theme-libadwaita-dark \
+  ~/.config/ulauncher/user-themes/libadwaita-dark
+
 # Install Github command line tools
 dnf install dnf5-plugins -y
 dnf config-manager addrepo --from-repofile=https://cli.github.com/packages/rpm/gh-cli.repo
