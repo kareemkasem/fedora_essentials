@@ -37,6 +37,11 @@ if ! command -v curl &>/dev/null; then
     dnf install curl -y
 fi
 
+# Check if wget is installed
+if ! command -v wget &>/dev/null; then
+    dnf install wget -y
+fi
+
 # Install Gnome Essentials
 dnf install -y gnome-tweaks gnome-shell-extension-blur-my-shell gnome-shell-extension-dash-to-dock gnome-shell-extension-light-style
 git clone https://github.com/mukul29/legacy-theme-auto-switcher-gnome-extension.git /usr/share/gnome-shell/extensions/
@@ -74,13 +79,13 @@ read response
 
 if [ "$response" = "y" ]; then
     # Install Node.js
-    sudo dnf install -y nodejs npm
+    dnf install -y nodejs npm
 
     # Get Latest MongoDB Version
     MONGO_VERSION=$(curl -s https://www.mongodb.com/try/download/community | grep -oP '(?<=mongodb-org/)[0-9]+\.[0-9]+' | head -1)
 
     # Add MongoDB Repository
-    sudo tee /etc/yum.repos.d/mongodb-org.repo >/dev/null <<EOF
+    tee /etc/yum.repos.d/mongodb-org.repo >/dev/null <<EOF
 [mongodb-org]
 name=MongoDB Repository
 baseurl=https://repo.mongodb.org/yum/redhat/9/mongodb-org/$MONGO_VERSION/x86_64/
@@ -90,25 +95,25 @@ gpgkey=https://pgp.mongodb.com/server-$MONGO_VERSION.asc
 EOF
 
     # Install Latest MongoDB
-    sudo dnf install -y mongodb-org
-    sudo dnf swap -y mongodb-mongosh mongodb-mongosh-shared-openssl3
+    dnf install -y mongodb-org
+    dnf swap -y mongodb-mongosh mongodb-mongosh-shared-openssl3
 
     # Install Postman via Flatpak
     flatpak install --noninteractive flathub com.getpostman.Postman
 
     # Install jq
-    sudo dnf install -y jq
+    dnf install -y jq
 
     # Download & Install WebStorm
     cd /tmp
     LATEST_URL=$(curl -s https://data.services.jetbrains.com/products/releases?code=WS | jq -r '.WS[0].downloads.linux.link')
     wget "$LATEST_URL" -O WebStorm-latest.tar.gz
-    sudo tar -xzf WebStorm-latest.tar.gz -C /opt/
-    sudo ln -sf /opt/WebStorm-*/bin/webstorm.sh /usr/local/bin/webstorm
+    tar -xzf WebStorm-latest.tar.gz -C /opt/
+    ln -sf /opt/WebStorm-*/bin/webstorm.sh /usr/local/bin/webstorm
 
     # Create WebStorm Desktop Entry
     WEBSTORM_DIR=$(ls -d /opt/WebStorm-*/ | head -1)
-    sudo tee /usr/share/applications/jetbrains-webstorm.desktop >/dev/null <<EOF
+    tee /usr/share/applications/jetbrains-webstorm.desktop >/dev/null <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
@@ -128,7 +133,7 @@ EOF
     # Download & Install MongoDB Compass
     LATEST_URL=$(curl -s https://www.mongodb.com/try/download/compass | grep -oP 'https://downloads\.mongodb\.com/compass/mongodb-compass-[^"]+\.x86_64\.rpm' | head -1)
     wget "$LATEST_URL" -O mongodb-compass-latest.rpm
-    sudo dnf install -y mongodb-compass-latest.rpm
+    dnf install -y mongodb-compass-latest.rpm
     rm -f mongodb-compass-latest.rpm
 fi
 
